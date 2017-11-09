@@ -1,0 +1,39 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.width = 9.4, fig.height = 6)
+```
+
+## Performance Stats for MT Cars Data
+
+`r format(Sys.Date(), format="%B %d %Y")`
+
+An evaluation of thirty-two 1973 model year cars in terms of horsepower, fuel efficiency, engine displacement and acceleration.  Original data was published by Motor Trend magazine in 1974.
+
+Check out the plot below that shows all four dimensions listed above.  Hover over each point to see the model and each statistic plotted.
+
+MPG, Horsepower, and Displacement are plotted in 3D,  The color represents the quarter mile time with purple dots being the quicker cars and yellow being thw slowest.
+
+
+``` {r, echo=F, message=F}
+
+# plotly stuff for project 2
+
+library(plotly)
+
+d1<-mtcars
+d1$Model<-row.names(d1)
+
+plot<-plot_ly(d1, x=~d1$mpg, y=~d1$disp, z=~d1$hp, type="scatter3d", color=d1$qsec,
+              mode="markers", text= ~paste(d1$Model, "Horsepower:", d1$hp, "Displacement:",
+              d1$disp,"MPG:", d1$mpg, "Quarter Mile:", d1$qsec, sep="<br>"),hoverinfo="text") %>%
+      layout(
+              title = "Horsepower, Displacement, and Mileage for MT Cars Data",
+              scene = list(
+                            xaxis = list(title = "MPG"),
+                            yaxis = list(title = "Displacement"),
+                            zaxis = list(title = "Horsepower")
+                   ))%>%
+      config(displayModeBar=F)
+
+plot
+```
+
